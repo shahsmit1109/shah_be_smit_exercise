@@ -1,5 +1,6 @@
 package com.ecore.roles.web.rest;
 
+import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
 import com.ecore.roles.service.RolesService;
 import com.ecore.roles.web.RolesApi;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -61,6 +64,23 @@ public class RolesRestController implements RolesApi {
         return ResponseEntity
                 .status(200)
                 .body(fromModel(rolesService.GetRole(roleId)));
+    }
+
+    @Override
+    @PostMapping(
+            path = "/filter",
+            produces = {"application/json"})
+    public ResponseEntity<List<RoleDto>> filterRoles(@RequestParam(name="userId") @NotNull UUID userId, @RequestParam(name="teamId") @NotNull UUID teamId ) {
+        List <Membership> members = rolesService.filterRoles(userId, teamId);
+        List<RoleDto> roleDtoList = new ArrayList<>();
+        for(Membership member : members)
+        {
+                RoleDto roleDto = fromModel(member.getRole());
+                roleDtoList.add(roleDto);
+        }
+        return ResponseEntity
+                .status(200)
+                .body(roleDtoList);
     }
 
 }
