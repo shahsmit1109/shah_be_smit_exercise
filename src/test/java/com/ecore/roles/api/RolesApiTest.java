@@ -73,7 +73,7 @@ public class RolesApiTest {
         Role expectedRole = DEVOPS_ROLE();
 
         RoleDto actualRole = createRole(expectedRole)
-                .statusCode(201)
+                .statusCode(200)
                 .extract().as(RoleDto.class);
 
         assertThat(actualRole.getName()).isEqualTo(expectedRole.getName());
@@ -134,7 +134,7 @@ public class RolesApiTest {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         mockGetTeamById(mockServer, ORDINARY_CORAL_LYNX_TEAM_UUID, ORDINARY_CORAL_LYNX_TEAM());
         createMembership(expectedMembership)
-                .statusCode(201);
+                .statusCode(200);
 
         getRole(expectedMembership.getUserId(), expectedMembership.getTeamId())
                 .statusCode(200)

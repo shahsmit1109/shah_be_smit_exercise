@@ -40,7 +40,7 @@ public class RestAssuredHelper {
 
     public static EcoreValidatableResponse getRoles() {
         return sendRequest(when()
-                .get("/v1/roles")
+                .post("/v1/roles")
                 .then());
     }
 
@@ -48,16 +48,16 @@ public class RestAssuredHelper {
         return sendRequest(given()
                 .pathParam("roleId", roleId)
                 .when()
-                .get("/v1/roles/{roleId}")
+                .post("/v1/roles/{roleId}")
                 .then());
     }
 
     public static EcoreValidatableResponse getRole(UUID userId, UUID teamId) {
         return sendRequest(given()
-                .queryParam("teamMemberId", userId)
+                .queryParam("userId", userId)
                 .queryParam("teamId", teamId)
                 .when()
-                .get("/v1/roles/search")
+                .post("/v1/roles/filter")
                 .then());
     }
 
@@ -73,7 +73,7 @@ public class RestAssuredHelper {
         return sendRequest(given()
                 .queryParam("roleId", roleId)
                 .when()
-                .get("/v1/roles/memberships/search")
+                .post("/v1/roles/memberships/search")
                 .then());
     }
 
