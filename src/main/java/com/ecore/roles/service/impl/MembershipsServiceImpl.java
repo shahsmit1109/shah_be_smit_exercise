@@ -10,10 +10,10 @@ import com.ecore.roles.repository.MembershipRepository;
 import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.MembershipsService;
 import com.ecore.roles.service.TeamsService;
-
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static com.ecore.roles.web.dto.TeamDto.fromModel;
 
 import java.util.List;
 import java.util.UUID;
@@ -46,7 +46,6 @@ public class MembershipsServiceImpl implements MembershipsService {
                 .isPresent()) {
             throw new ResourceExistsException(Membership.class);
         }
-        System.out.println("Debugging team"+m.getTeamId());
         if(teamsService.getTeam(m.getTeamId()) == null ){
             throw new ResourceNotFoundException(Team.class, m.getTeamId());
         }
